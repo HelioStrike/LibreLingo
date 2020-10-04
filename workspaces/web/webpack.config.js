@@ -3,7 +3,7 @@ const path = require("path")
 const config = require("sapper/config/webpack.js")
 const pkg = require("./package.json")
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
-const sass = require("svelte-preprocess-sass").sass
+const {typescript, sass} = require("svelte-preprocess")
 const CopyPlugin = require("copy-webpack-plugin")
 const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
     .BundleAnalyzerPlugin
@@ -63,9 +63,10 @@ module.exports = {
                     use: {
                         loader: "svelte-loader",
                         options: {
-                            preprocess: {
-                                style: sass({}, { all: true }),
-                            },
+                            preprocess: [
+                                typescript({}),
+                                sass({}),
+                            ],
                             dev,
                             hydratable: true,
                             hotReload: false, // pending https://github.com/sveltejs/svelte/issues/2377
@@ -117,9 +118,10 @@ module.exports = {
                     use: {
                         loader: "svelte-loader",
                         options: {
-                            preprocess: {
-                                style: sass({}, { all: true }),
-                            },
+                            preprocess: [
+                                typescript({}),
+                                sass({}),
+                            ],
                             css: false,
                             generate: "ssr",
                             dev,
